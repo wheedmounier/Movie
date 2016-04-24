@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.waheed.movie_app.Detailed_Fragment">
+
+        <!-- TODO: Update blank fragment layout -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_title"
+            android:background="#449775"
+            android:textColor="@android:color/white"
+            android:scaleType="fitXY"
+            android:textSize="@dimen/activity_horizontal_margin"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_poster"
+            android:layout_below="@+id/tv_title"
+            android:scaleType="fitXY"
+            android:layout_alignParentLeft="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_date"
+            android:layout_toRightOf="@id/iv_poster"
+            android:layout_below="@+id/tv_title"
+            android:scaleType="fitXY"
+            android:layout_margin="20dp"
+            />
+
+        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Favorites"
+            android:layout_toRightOf="@+id/iv_poster"
+            android:id="@+id/favorite"
+            android:layout_below="@+id/tv_date"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="20dp"
+            android:layout_alignBaseline="@+id/cb_favorite"
+            />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cb_favorite"
+            android:layout_below="@+id/tv_date"
+            android:layout_toRightOf="@+id/favorite"
+            android:scaleType="fitXY"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_overview"
+            android:layout_below="@+id/iv_poster"/>
+
+</RelativeLayout>
+

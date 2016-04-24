@@ -1,0 +1,40 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.waheed.movie_app.Detailed_Fragment"
+    android:orientation="vertical">
+
+    <!-- TODO: Update blank fragment layout -->
+
+  <ListView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/list_details">
+  </ListView>
+
+  <Button
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:background="#449775"
+      android:id="@+id/sp_trailers"
+      android:text="Trailers"
+      android:textColor="@android:color/white"
+      android:layout_marginTop="10dp"
+      android:layout_marginBottom="10dp" />
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Reviews"
+      android:background="#449775"
+      android:textColor="@android:color/white"
+      android:gravity="center"/>
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/new_reviews"/>
+</LinearLayout>
+</ScrollView>

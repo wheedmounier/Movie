@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Movie</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <array name="entries">
+        <item>popular</item>
+        <item>top rated</item>
+    </array>
+    <array name="values" >
+        <item>popular</item>
+        <item>top_rated </item>
+    </array>
+    <string name="spinner_title">Trailers</string>
+    <array name="sp_data">
+
+    </array>
+</resources>
