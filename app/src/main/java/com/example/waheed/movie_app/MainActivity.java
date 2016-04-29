@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements NameListener {
     {
         if(twopane) {
             Detailed_Fragment detailsfragment=new Detailed_Fragment();
-            Log.e("saad", item.toString());
             detailsfragment.setArguments(item);
             getSupportFragmentManager().beginTransaction().replace(R.id.panel_two, detailsfragment).commit();
         }

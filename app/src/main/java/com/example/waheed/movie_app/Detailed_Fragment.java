@@ -75,15 +75,15 @@ public class Detailed_Fragment extends Fragment  {
         detailed_movie.vote_average = bundle.getFloat("vote_average");
         detailed_movie.releasedate = bundle.getString("releasedate");
         detailed_movie.id = bundle.getInt("id");
-        Log.e("donkeysaad","inside on create");
         if(savedInstanceState==null)
         {
             new Review().execute(String.valueOf(detailed_movie.id));
+            new Trailer().execute(String.valueOf(detailed_movie.id));
         }
         else
         {
             review=savedInstanceState.getString("review");
-            Log.e("donkeysaad", "load instance");
+            trailers=savedInstanceState.getStringArray("trailers");
         }
     }
 
@@ -95,7 +95,7 @@ public class Detailed_Fragment extends Fragment  {
         db = new Movie_db(getContext());
 
 
-        new Trailer().execute(String.valueOf(detailed_movie.id));
+        //new Trailer().execute(String.valueOf(detailed_movie.id));
         //new Review().execute(String.valueOf(detailed_movie.id));
 
         t = (TextView) root.findViewById(R.id.new_reviews);
@@ -138,7 +138,13 @@ public class Detailed_Fragment extends Fragment  {
         ArrayAdapter<String> trailer_adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_expandable_list_item_1);
         trailer_list.setAdapter(trailer_adapter);
 
-
+        if (trailers.length > 0) {
+            for (int i = 0; i < trailers.length; i++) {
+                lt.add("Play - Trailer " + (i + 1));
+            }
+        } else {
+            lt.add("No Trailers");
+        }
 
         final ArrayAdapter<String> ad=new ArrayAdapter<String>(getContext(),android.R.layout.simple_expandable_list_item_1,lt);
         b.setOnClickListener(new View.OnClickListener() {
@@ -170,7 +176,7 @@ public class Detailed_Fragment extends Fragment  {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString("review", review);
-        Log.e("donkeysaad", "inside on saved activity");
+        outState.putStringArray("trailers",trailers);
     }
 
 
@@ -259,13 +265,14 @@ public class Detailed_Fragment extends Fragment  {
                 trailers[0] = "No Trailers";
 
             }
+            /*
             if (trailers.length > 0) {
                 for (int i = 0; i < trailers.length; i++) {
                     lt.add("Play - Trailer " + (i + 1));
                 }
             } else {
                 lt.add("No Trailers");
-            }
+            }*/
 
         }
     }
@@ -353,7 +360,6 @@ public class Detailed_Fragment extends Fragment  {
             } else {
                 review="No Reviews";
             }
-            Log.e("donkeysaad","inside async task review");
             //t.setText(review);
         }
     }

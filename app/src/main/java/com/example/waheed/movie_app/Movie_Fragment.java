@@ -49,20 +49,6 @@ public class Movie_Fragment extends Fragment implements SharedPreferences.OnShar
     public Movie_Fragment() {
         // Required empty public constructor
     }
-/*
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if(savedInstanceState==null)
-        {
-
-        }
-        else
-        {
-            bundle=savedInstanceState;
-        }
-    }*/
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -86,7 +72,6 @@ public class Movie_Fragment extends Fragment implements SharedPreferences.OnShar
                     bundle.putInt("id", data[position].id);
                 // i.putExtras(bundle);
                 // startActivity(i);
-                Log.e("saad", bundle.toString());
                 ((NameListener)getActivity()).setmoviedata(bundle);
                 //moviedetails.setmoviedata(bundle);
             }
