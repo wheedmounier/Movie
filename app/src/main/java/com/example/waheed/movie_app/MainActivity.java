@@ -3,8 +3,10 @@ package com.example.waheed.movie_app;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -52,9 +54,8 @@ public class MainActivity extends AppCompatActivity implements NameListener {
     {
         if(twopane) {
             Detailed_Fragment detailsfragment=new Detailed_Fragment();
-            Bundle bundle=new Bundle();
-            bundle=item;
-            detailsfragment.setArguments(bundle);
+            Log.e("saad", item.toString());
+            detailsfragment.setArguments(item);
             getSupportFragmentManager().beginTransaction().replace(R.id.panel_two, detailsfragment).commit();
         }
         else
@@ -65,6 +66,4 @@ public class MainActivity extends AppCompatActivity implements NameListener {
         }
 
     }
-
-
 }

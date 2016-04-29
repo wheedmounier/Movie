@@ -43,10 +43,25 @@ public class Movie_Fragment extends Fragment implements SharedPreferences.OnShar
     MovieItems [] data;
     String sort_type="popular";
     NameListener moviedetails;
-
+    Bundle bundle;
+    int pos=0;
+    Boolean rotation=false;
     public Movie_Fragment() {
         // Required empty public constructor
     }
+/*
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(savedInstanceState==null)
+        {
+
+        }
+        else
+        {
+            bundle=savedInstanceState;
+        }
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,28 +76,29 @@ public class Movie_Fragment extends Fragment implements SharedPreferences.OnShar
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Intent i = new Intent(getContext(),DetailedActivity.class);
-                Bundle bundle=new Bundle();
-                bundle.putString("title", data[position].title);
-                bundle.putString("poster", data[position].poster);
-                bundle.putString("overview", data[position].overview);
-                bundle.putFloat("vote_average", data[position].vote_average);
-                bundle.putString("releasedate", data[position].releasedate);
-                bundle.putInt("id", data[position].id);
-               // i.putExtras(bundle);
-               // startActivity(i);
-                moviedetails.setmoviedata(bundle);
+                    pos = position;
+                    bundle=new Bundle();
+                    bundle.putString("title", data[position].title);
+                    bundle.putString("poster", data[position].poster);
+                    bundle.putString("overview", data[position].overview);
+                    bundle.putFloat("vote_average", data[position].vote_average);
+                    bundle.putString("releasedate", data[position].releasedate);
+                    bundle.putInt("id", data[position].id);
+                // i.putExtras(bundle);
+                // startActivity(i);
+                Log.e("saad", bundle.toString());
+                ((NameListener)getActivity()).setmoviedata(bundle);
+                //moviedetails.setmoviedata(bundle);
             }
         });
         return  root;
     }
 
+
     public void setdata(NameListener namelistner)
     {
         moviedetails=namelistner;
     }
-
-
-
 
     public class FetchMovies extends AsyncTask<String , Void , MovieItems []> {
 
@@ -184,7 +200,6 @@ public class Movie_Fragment extends Fragment implements SharedPreferences.OnShar
 
         }
     }
-
     public void LoadPreferences()
     {
         SharedPreferences settings= PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -202,7 +217,6 @@ public class Movie_Fragment extends Fragment implements SharedPreferences.OnShar
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu,menu);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.settings)

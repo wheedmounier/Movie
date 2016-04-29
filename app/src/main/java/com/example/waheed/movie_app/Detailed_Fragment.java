@@ -59,35 +59,48 @@ public class Detailed_Fragment extends Fragment  {
     List<String> lt = new ArrayList<String>();
     ArrayAdapter<String> dataAdapter;
     Button b;
+    String review = "";
+    Bundle bundle;
     public Detailed_Fragment() {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_detailed_, container, false);
-
-        Bundle bundle = getArguments();
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        bundle = getArguments();
         detailed_movie.title = bundle.getString("title");
         detailed_movie.poster = bundle.getString("poster");
         detailed_movie.overview = bundle.getString("overview");
         detailed_movie.vote_average = bundle.getFloat("vote_average");
         detailed_movie.releasedate = bundle.getString("releasedate");
         detailed_movie.id = bundle.getInt("id");
+        Log.e("donkeysaad","inside on create");
+        if(savedInstanceState==null)
+        {
+            new Review().execute(String.valueOf(detailed_movie.id));
+        }
+        else
+        {
+            review=savedInstanceState.getString("review");
+            Log.e("donkeysaad", "load instance");
+        }
+    }
 
-
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View root = inflater.inflate(R.layout.fragment_detailed_, container, false);
         db = new Movie_db(getContext());
 
 
         new Trailer().execute(String.valueOf(detailed_movie.id));
-        new Review().execute(String.valueOf(detailed_movie.id));
+        //new Review().execute(String.valueOf(detailed_movie.id));
 
         t = (TextView) root.findViewById(R.id.new_reviews);
         trailer_list = (ListView) root.findViewById(R.id.list_details);
-
+        t.setText(review);
 
         LayoutInflater inflate = getActivity().getLayoutInflater();
         View header = inflate.inflate(R.layout.list_header_detail, trailer_list, false);
@@ -152,6 +165,14 @@ public class Detailed_Fragment extends Fragment  {
         });
         return root;
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("review", review);
+        Log.e("donkeysaad", "inside on saved activity");
+    }
+
 
     public class Trailer extends AsyncTask<String, String[], String[]> {
         public String[] get_trailers(String json) throws JSONException {
@@ -323,7 +344,6 @@ public class Detailed_Fragment extends Fragment  {
         @Override
         protected void onPostExecute(String[] strings) {
             super.onPostExecute(strings);
-            String review = "";
             if (strings.length > 0 && strings != null) {
                 reviews = new String[strings.length];
                 reviews = strings;
@@ -332,12 +352,9 @@ public class Detailed_Fragment extends Fragment  {
                 }
             } else {
                 review="No Reviews";
-                reviews = new String[1];
-                reviews[0] = "No Reviews";
             }
-            // ArrayAdapter<String> review_adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_expandable_list_item_1,reviews);
-            // reviews_list.setAdapter(review_adapter);
-            t.setText(review);
+            Log.e("donkeysaad","inside async task review");
+            //t.setText(review);
         }
     }
 
