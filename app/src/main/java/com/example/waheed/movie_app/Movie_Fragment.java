@@ -46,9 +46,48 @@ public class Movie_Fragment extends Fragment implements SharedPreferences.OnShar
     Bundle bundle;
     int pos=0;
     Boolean rotation=false;
+
+    String [] title;
+    String [] poster;
+    String [] overview;
+    String [] vote_average;
+    String [] releasedate;
+    String [] id;
     public Movie_Fragment() {
         // Required empty public constructor
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(savedInstanceState==null)
+        {
+            new FetchMovies().execute(sort_type);
+        }
+        else
+        {
+            title=savedInstanceState.getStringArray("title");
+            poster=savedInstanceState.getStringArray("poster");
+            overview=savedInstanceState.getStringArray("overview");
+            vote_average=savedInstanceState.getStringArray("vote_average");
+            releasedate=savedInstanceState.getStringArray("releasedate");
+            id=savedInstanceState.getStringArray("id");
+            data =new MovieItems[title.length];
+            for(int j=0;j<data.length;j++){
+                data[j] = new MovieItems();
+            }
+            for(int i=0;i<title.length;i++)
+            {
+                data[i].title=title[i];
+                data[i].poster=poster[i];
+                data[i].overview=overview[i];
+                data[i].vote_average=Float.parseFloat(vote_average[i]);
+                releasedate[i]=data[i].releasedate;
+                data[i].id=Integer.parseInt(id[i]);
+            }
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,28 +96,56 @@ public class Movie_Fragment extends Fragment implements SharedPreferences.OnShar
         setHasOptionsMenu(true);
         LoadPreferences();
         grid_movie=(GridView)root.findViewById(R.id.gv_movies);
-        new FetchMovies().execute(sort_type);
+        //new FetchMovies().execute(sort_type);
+        adapter=new ImageAdapter(getActivity(),data);
+        grid_movie.setAdapter(adapter);
+
         grid_movie.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Intent i = new Intent(getContext(),DetailedActivity.class);
-                    pos = position;
-                    bundle=new Bundle();
-                    bundle.putString("title", data[position].title);
-                    bundle.putString("poster", data[position].poster);
-                    bundle.putString("overview", data[position].overview);
-                    bundle.putFloat("vote_average", data[position].vote_average);
-                    bundle.putString("releasedate", data[position].releasedate);
-                    bundle.putInt("id", data[position].id);
+                pos = position;
+                bundle = new Bundle();
+                bundle.putString("title", data[position].title);
+                bundle.putString("poster", data[position].poster);
+                bundle.putString("overview", data[position].overview);
+                bundle.putFloat("vote_average", data[position].vote_average);
+                bundle.putString("releasedate", data[position].releasedate);
+                bundle.putInt("id", data[position].id);
                 // i.putExtras(bundle);
                 // startActivity(i);
-                ((NameListener)getActivity()).setmoviedata(bundle);
+                ((NameListener) getActivity()).setmoviedata(bundle);
                 //moviedetails.setmoviedata(bundle);
             }
         });
         return  root;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        title=new String[data.length];
+        poster=new String[data.length];
+        overview=new String[data.length];
+        vote_average=new String[data.length];
+        releasedate=new String[data.length];
+        id=new String[data.length];
+        for(int i=0;i<data.length;i++)
+        {
+            title[i]=data[i].title;
+            poster[i]=data[i].poster;
+            overview[i]=data[i].overview;
+            vote_average[i]=String.valueOf(data[i].vote_average);
+            releasedate[i]=data[i].releasedate;
+            id[i]=String.valueOf(data[i].id);
+        }
+        outState.putStringArray("title",title);
+        outState.putStringArray("poster",poster);
+        outState.putStringArray("overview",overview);
+        outState.putStringArray("vote_average",vote_average);
+        outState.putStringArray("releasedate",releasedate);
+        outState.putStringArray("id",id);
+    }
 
     public void setdata(NameListener namelistner)
     {
@@ -179,9 +246,10 @@ public class Movie_Fragment extends Fragment implements SharedPreferences.OnShar
             for (int i=0;i<data.length;i++) {
                 data[i]=new MovieItems();
             }
-            adapter=new ImageAdapter(getActivity(),movieItemses);
-            grid_movie.setAdapter(adapter);
             data=movieItemses;
+            adapter=new ImageAdapter(getActivity(),data);
+            grid_movie.setAdapter(adapter);
+
 
         }
     }
